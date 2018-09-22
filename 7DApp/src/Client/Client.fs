@@ -1,5 +1,12 @@
 module Client
 
+// open Fable
+open Fable.Core
+// open Fable.Import.RemoteDev
+// open Fable.Import.Browser
+// open Fable.Import
+open JsInterop
+
 open Elmish
 open Elmish.React
 
@@ -12,6 +19,16 @@ open Shared
 open Fulma
 
 
+// importAll "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+importAll "../Client/lib/css/theme/style.css"
+
+importAll "../Client/lib/css/theme/animate.css"
+importAll "../Client/lib/css/theme/main.css"
+
+// importAll "../Client/lib/js/theme/main.js.js"//ex ac
+// // importAll "../../node_modules/jquery/dist/jquery.min.js"
+// // importAll "../Client/lib//js/core/jquery.min.js"
+// importAll "../Client/lib/js/theme/plugins/metisMenu/jquery.metisMenu.js"
 // The model holds data that you want to keep track of while the application is running
 // in this case, we are keeping track of a counter
 // we mark it as optional, because initially it will not be available from the client
