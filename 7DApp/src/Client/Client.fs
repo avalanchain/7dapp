@@ -19,10 +19,13 @@ open MsgModel
 
 open Elmish.Bridge
 
+open Client.TopMenu
+open Client.Footer
+
 open Fulma
 
 
-// importAll "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
+importAll "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 importAll "../Client/lib/css/theme/style.css"
 
 importAll "../Client/lib/css/theme/animate.css"
@@ -55,8 +58,23 @@ let button txt onClick =
         [ str txt ]
 
 let view (model : Model) (dispatch : ClientMsg -> unit) =
-    div [] [    str (string model) 
-                button "From Client" (fun _ -> QueryConnected |> RC |> dispatch) 
+    div [] [    
+               
+                div []
+        [
+            topmenu
+            div [ Class " gray-bg"
+                  ]
+                [
+                    div [ Class "row"]
+                        [
+
+                        ]
+                ]
+            footerw
+                            
+                    
+                    ]
             ]
 
 

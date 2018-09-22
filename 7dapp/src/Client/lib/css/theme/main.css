@@ -794,3 +794,6 @@ pre {
 .navbar {
     margin-bottom: 0px;
 }
+.navbar-brand{
+    margin-left: 10px;
+}
