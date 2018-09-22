@@ -5,202 +5,117 @@ open Elmish.React
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fable.PowerPack.Fetch
 
 open Shared
 
-open Elmish.Bridge
-open Fable.Core.JsInterop
-importAll "../../node_modules/bulma/bulma.sass"
-
-type ClientMsg =
-    | RC of RemoteClientMsg
-    | SendUser
-    | ConnectionLost
-    | SetTextField of string
-    | SetUserField of string
-    | SetColor of Color
-
-type Connection =
-  | Disconnected
-  | Waiting
-  | Connected of User
-
-
-type Model = {
-    Connection : Connection
-    ConnectedUsers : User list
-    Messages : Msgs list
-    TextField : string
-    UserField : string
-    ColorField : Color
-}
-
-let init () =
-  {
-    Connection = Disconnected
-    ConnectedUsers = []
-    Messages = []
-    TextField = ""
-    UserField = ""
-    ColorField = Black
-  }, Cmd.none
-let update (msg : ClientMsg) (model : Model)  =
-  match msg with
-  | SendUser ->
-    match model.UserField with
-    |"" -> model, Cmd.none
-    |_ ->
-      Bridge.Send(SetUser {Name = model.UserField; Color = model.ColorField})
-      {model with Connection=Waiting}, Cmd.none
-  | ConnectionLost -> {model with Connection = Disconnected}, Cmd.none
-  | RC msg ->
-    match msg with
-    | GetUsers l -> {model with ConnectedUsers = l}, Cmd.none
-    | QueryConnected ->
-        match model.Connection with
-        |Connected u -> Bridge.Send(SetUser u)
-        |Waiting | Disconnected -> ()
-        Bridge.Send UsersConnected
-        {model with ConnectedUsers = []}, Cmd.none
-    | NameStatus s ->
-        match model.Connection with
-        |Waiting ->
-          {model with Connection =  if s then Connected {Name = model.UserField; Color = model.ColorField} else Disconnected}
-        |_ -> model
-        , Cmd.none
-
-    | AddUser u ->
-      {model with ConnectedUsers = u::model.ConnectedUsers}, Cmd.none
-    | RemoveUser u ->
-      {model with
-        ConnectedUsers =
-          model.ConnectedUsers
-          |> List.filter (fun {Name=n} -> n<>u)}, Cmd.none
-    | AddMsg m ->
-      {model with Messages = m::model.Messages}, Cmd.none
-    | ColorChange (u,c) ->
-      let newConnUsers = model.ConnectedUsers |> List.map (fun ({Name=n} as o) ->if n=u then {o with Color=c} else o )
-      let newConn =
-        match model.Connection with
-        |Connected (({Name=us}) as user) when us = u -> Connected {user with Color = c}
-        |e -> e
-      {model with
-        ConnectedUsers = newConnUsers
-        Connection = newConn}
-      ,Cmd.none
-    | AddMsgs m -> {model with Messages = m}, Cmd.none
-  | SetTextField tx -> {model with TextField = tx}, Cmd.none
-  | SetUserField tx -> {model with UserField = tx}, Cmd.none
-  | SetColor c ->
-      match model.Connection with
-      |Connected {Color=o} when o<>c -> Bridge.Send(ChangeColor c)
-      |_ -> ()
-      {model with ColorField = c},Cmd.none
 open Fulma
-let ColorToColor = function
-  | Red -> IsDanger
-  | Green -> IsSuccess
-  | Blue -> IsLink
-  | Black -> IsDark
-let formatUser {Name=n;Color=c} = Message.message [Message.Size IsSmall;Message.Color (ColorToColor c)] [Message.body [][str n]]
-let colorSelector dispatch =
-  [Red;Green;Blue;Black]
-  |> List.map (fun c ->
-    Column.column [Column.Width (Screen.All,Column.IsOneQuarter)]
-      [Button.a [
-        Button.Color (ColorToColor c)
-        Button.OnClick (fun _ -> dispatch(SetColor c))][str " "]])
-  |>
-  Columns.columns [Columns.IsMobile;Columns.CustomClass "is-variable is-1";Columns.IsMultiline]
-let formatMessage users = function
-  | SysMsg {Time=t;Content=c}->
-    Message.message [Message.Color IsWarning;Message.Size IsSmall][
-      Message.body [][
-        Columns.columns [Columns.IsMobile][
-          Column.column[Column.Width (Screen.All,Column.Is11)][str c]
-          Column.column[Column.Width (Screen.All,Column.Is1)][str (t.ToShortTimeString())]
-        ]
-      ]
-    ]
-  | ClientMsg (user,{Time=t;Content=c}) ->
-    let color =
-      users
-      |> List.tryPick (fun {Name=n;Color = c} -> if n = user then Some (ColorToColor c) else None)
-      |> Option.defaultValue IsWarning
-    Message.message [Message.Color color;Message.Size IsSmall][
-      Message.header[][str user]
-      Message.body [][
-        Columns.columns [Columns.IsMobile][
-          Column.column[Column.Width (Screen.All,Column.Is11)][str c]
-          Column.column[Column.Width (Screen.All,Column.Is1)][str (t.ToShortTimeString())]
-        ]
-      ]
-    ]
 
-open Fable.Import
 
-let view model dispatch =
-  let props size : IHTMLProp list = [ Style [CSSProp.Height size;CSSProp.MaxHeight size;CSSProp.Overflow "auto"]]
-  div [Style[CSSProp.Overflow "none"]]  [
-    Container.container [Container.Props [Style [CSSProp.Height "100vh";CSSProp.MaxHeight "100vh";CSSProp.Overflow "none"]]] [
-        Columns.columns [Columns.IsMobile] [
-          Column.column [Column.Width (Screen.All,Column.IsFourFifths);Column.Props (props "80vh")]
-            (model.Messages |> List.map (formatMessage model.ConnectedUsers))
-          Column.column [Column.Props (props "80vh")]
-            (model.ConnectedUsers |> List.map formatUser)
-        ]
-        Container.container [Container.Props [Style [CSSProp.Height "10vh";CSSProp.MaxHeight "20vh";CSSProp.Position "absolute";CSSProp.Bottom "0"]]]
-          (match model.Connection with
-          | Connected _ ->
-             [
-              Media.media[][
-                 Media.left [] [(colorSelector dispatch)]
-                 Media.content[][
-                  Input.text [
-                    Input.Placeholder "Message"
-                    Input.Value model.TextField
-                    Input.OnChange (fun e -> dispatch (!!e.target?value |> SetTextField))
-                    Input.Props [
-                      OnKeyDown (fun (ev:React.KeyboardEvent) ->
-                                if ev.keyCode = Fable.PowerPack.Keyboard.Codes.enter then
-                                  ev.preventDefault()
-                                  Bridge.Send(SendMsg model.TextField)
-                                  dispatch (SetTextField ""))
+// The model holds data that you want to keep track of while the application is running
+// in this case, we are keeping track of a counter
+// we mark it as optional, because initially it will not be available from the client
+// the initial value will be requested from server
+type Model = { Counter: Counter option }
 
-                    ]]]
+// The Msg type defines what events/actions can occur while the application is running
+// the state of the application changes *only* in reaction to these events
+type Msg =
+| Increment
+| Decrement
+| InitialCountLoaded of Result<Counter, exn>
 
-                 Media.right[][
-                  Button.a [
-                    Button.OnClick (fun _ ->
-                      Bridge.Send(SendMsg model.TextField)
-                      dispatch (SetTextField ""))
-                    Button.Disabled (model.TextField = "") ][str "Send"]
-                 ]
-            ]]
-          | d ->
-            [
-                Media.media[][
-                 Media.left[][(colorSelector dispatch)]
-                 Media.content[][
-                     Input.text [
-                      Input.Placeholder "User name"
-                      Input.Disabled (d = Waiting)
-                      Input.Value model.UserField
-                      Input.OnChange (fun e -> dispatch (!!e.target?value |> SetUserField))
-                      Input.Props [
-                        OnKeyDown (fun (ev:React.KeyboardEvent) ->
-                                if ev.keyCode = Fable.PowerPack.Keyboard.Codes.enter &&  d <> Waiting then
-                                  ev.preventDefault()
-                                  dispatch SendUser)
 
-                      ]]]
-                 Media.right[][
-                  Button.a [Button.OnClick (fun _ -> dispatch SendUser);Button.IsLoading (d = Waiting) ][str "Send"]
-                 ]
-              ]
-            ])
-      ]
-  ]
+module Server =
+
+    open Shared
+    open Fable.Remoting.Client
+
+    /// A proxy you can use to talk to server directly
+    let api : ICounterApi =
+      Remoting.createApi()
+      |> Remoting.withRouteBuilder Route.builder
+      |> Remoting.buildProxy<ICounterApi>
+
+
+// defines the initial state and initial command (= side-effect) of the application
+let init () : Model * Cmd<Msg> =
+    let initialModel = { Counter = None }
+    let loadCountCmd =
+        Cmd.ofAsync
+            Server.api.initialCounter
+            ()
+            (Ok >> InitialCountLoaded)
+            (Error >> InitialCountLoaded)
+    initialModel, loadCountCmd
+
+// The update function computes the next state of the application based on the current state and the incoming events/messages
+// It can also run side-effects (encoded as commands) like calling the server via Http.
+// these commands in turn, can dispatch messages to which the update function will react.
+let update (msg : Msg) (currentModel : Model) : Model * Cmd<Msg> =
+    match currentModel.Counter, msg with
+    | Some x, Increment ->
+        let nextModel = { currentModel with Counter = Some (x + 1) }
+        nextModel, Cmd.none
+    | Some x, Decrement ->
+        let nextModel = { currentModel with Counter = Some (x - 1) }
+        nextModel, Cmd.none
+    | _, InitialCountLoaded (Ok initialCount)->
+        let nextModel = { Counter = Some initialCount }
+        nextModel, Cmd.none
+
+    | _ -> currentModel, Cmd.none
+
+
+let safeComponents =
+    let components =
+        span [ ]
+           [
+             a [ Href "https://github.com/giraffe-fsharp/Giraffe" ] [ str "Giraffe" ]
+             str ", "
+             a [ Href "http://fable.io" ] [ str "Fable" ]
+             str ", "
+             a [ Href "https://elmish.github.io/elmish/" ] [ str "Elmish" ]
+             str ", "
+             a [ Href "https://mangelmaxime.github.io/Fulma" ] [ str "Fulma" ]
+             str ", "
+             a [ Href "https://zaid-ajaj.github.io/Fable.Remoting/" ] [ str "Fable.Remoting" ]
+           ]
+
+    p [ ]
+        [ strong [] [ str "SAFE Template" ]
+          str " powered by: "
+          components ]
+
+let show = function
+| { Counter = Some x } -> string x
+| { Counter = None   } -> "Loading..."
+
+let button txt onClick =
+    Button.button
+        [ Button.IsFullWidth
+          Button.Color IsPrimary
+          Button.OnClick onClick ]
+        [ str txt ]
+
+let view (model : Model) (dispatch : Msg -> unit) =
+    div []
+        [ Navbar.navbar [ Navbar.Color IsPrimary ]
+            [ Navbar.Item.div [ ]
+                [ Heading.h2 [ ]
+                    [ str "SAFE Template" ] ] ]
+
+          Container.container []
+              [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+                    [ Heading.h3 [] [ str ("Press buttons to manipulate counter: " + show model) ] ]
+                Columns.columns []
+                    [ Column.column [] [ button "-" (fun _ -> dispatch Decrement) ]
+                      Column.column [] [ button "+" (fun _ -> dispatch Increment) ] ] ]
+
+          Footer.footer [ ]
+                [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+                    [ safeComponents ] ] ]
+
 
 #if DEBUG
 open Elmish.Debug
@@ -208,16 +123,12 @@ open Elmish.HMR
 #endif
 
 Program.mkProgram init update view
-|> Program.withBridgeConfig
-  (Bridge.endpoint Remote.socketPath
-  |> Bridge.withMapping RC
-  |> Bridge.withWhenDown ConnectionLost)
 #if DEBUG
 |> Program.withConsoleTrace
-|> Program.withDebugger
-#endif
-|> Program.withReactUnoptimized "elmish-app"
-#if DEBUG
 |> Program.withHMR
+#endif
+|> Program.withReact "elmish-app"
+#if DEBUG
+|> Program.withDebugger
 #endif
 |> Program.run

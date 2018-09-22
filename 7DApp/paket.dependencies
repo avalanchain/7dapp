@@ -1,21 +1,26 @@
 group Server
-  storage: none
-  source https://api.nuget.org/v3/index.json
+    storage: none
+    source https://api.nuget.org/v3/index.json
 
-  nuget Elmish.Bridge.Giraffe
-  nuget Saturn
+    nuget FSharp.Core
+    nuget Giraffe
+    nuget Microsoft.AspNetCore
+    nuget Microsoft.AspNetCore.StaticFiles
+    nuget Fable.Remoting.Giraffe
 
 group Client
-  storage: none
-  source https://api.nuget.org/v3/index.json
+    storage: none
+    source https://api.nuget.org/v3/index.json
 
-  nuget Elmish.Bridge.Client
-  nuget Fable.Elmish.Debugger
-  nuget Fable.Elmish.React
-  nuget Fable.Elmish.HMR
-  nuget Fulma
+    nuget Fable.Core
+    nuget Fable.Elmish.Debugger
+    nuget Fable.Elmish.React
+    nuget Fable.Elmish.HMR
+    nuget Fable.Remoting.Client
+    nuget Fulma
 
-  clitool dotnet-fable
+    clitool dotnet-fable
+
 group Build
     storage: none
     source https://api.nuget.org/v3/index.json

@@ -1,3 +1,6 @@
 group Server
-    Saturn
-    Elmish.Bridge.Giraffe
+    FSharp.Core
+    Giraffe
+    Microsoft.AspNetCore
+    Microsoft.AspNetCore.StaticFiles
+    Fable.Remoting.Giraffe
