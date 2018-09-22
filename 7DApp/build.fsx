@@ -84,7 +84,9 @@ Target.create "Build" (fun _ ->
 )
 
 Target.create "Run" (fun _ ->
+    printfn "Run aaaa"
     let server = async {
+        printfn "watch run %s" serverPath
         runDotNet "watch run" serverPath
     }
     let client = async {
@@ -99,18 +101,17 @@ Target.create "Run" (fun _ ->
     |> Async.Parallel
     |> Async.RunSynchronously
     |> ignore
+
+    Console.ReadLine() |> ignore
 )
 
 
 open Fake.Core.TargetOperators
 
-"Clean"
-    //==> "InstallClient"
-    ==> "Build"
 
 "Clean"
-    ==> "InstallClient"
+    //==> "InstallClient"
     ==> "RestoreServer"
     ==> "Run"
 
-Target.runOrDefault "Build"
+Target.runOrDefault "Run"
