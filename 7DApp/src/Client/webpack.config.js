@@ -41,6 +41,10 @@ module.exports = {
             '/api/*': {
                 target: 'http://localhost:' + port,
                 changeOrigin: true
+            },
+            '/socket': {
+                target: 'http://localhost:' + port,
+                ws: true
             }
         },
         contentBase: "./public",
@@ -48,8 +52,7 @@ module.exports = {
         inline: true
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.fs(x|proj)?$/,
                 use: {
                     loader: "fable-loader",

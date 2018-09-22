@@ -1,6 +1,7 @@
 group Server
     FSharp.Core
     Giraffe
+    Elmish.Bridge.Giraffe
     Microsoft.AspNetCore
     Microsoft.AspNetCore.StaticFiles
     Fable.Remoting.Giraffe

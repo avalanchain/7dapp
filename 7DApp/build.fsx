@@ -110,7 +110,7 @@ open Fake.Core.TargetOperators
 
 
 "Clean"
-    //==> "InstallClient"
+    ==> "InstallClient"
     ==> "RestoreServer"
     ==> "Run"
 

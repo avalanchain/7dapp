@@ -4,6 +4,7 @@ group Server
 
     nuget FSharp.Core
     nuget Giraffe
+    nuget Elmish.Bridge.Giraffe
     nuget Microsoft.AspNetCore
     nuget Microsoft.AspNetCore.StaticFiles
     nuget Fable.Remoting.Giraffe
@@ -13,6 +14,7 @@ group Client
     source https://api.nuget.org/v3/index.json
 
     nuget Fable.Core
+    nuget Elmish.Bridge.Client
     nuget Fable.Elmish.Debugger
     nuget Fable.Elmish.React
     nuget Fable.Elmish.HMR
