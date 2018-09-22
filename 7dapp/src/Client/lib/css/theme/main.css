@@ -1,16 +1,16 @@
 /* Colors */
 
 .md-skin .navbar-fixed-top, .md-skin .navbar-static-top {
-    background-color: #C7413E !important;
+    background-color: #0e9aef !important;
 }
 
 .btn-primary {
-    background-color: #C7413E;
-    border-color: #C7413E;
+    background-color: #0e9aef;
+    border-color: #0e9aef;
 }
 
 .nav > li.active {
-    border-left: 4px solid #C7413E;
+    border-left: 4px solid #0e9aef;
 }
 
 .btn-primary.btn-outline {
@@ -88,7 +88,7 @@ button.btn-primary.dim:active {
 
 .toast-success {
     background-color: #1ab394 !important;
-    /*#C7413E;*/
+    /*#0e9aef;*/
 }
 
 .toast-error {
@@ -313,19 +313,19 @@ button.btn-primary.dim:active {
 }
 
 .li.cancelled .status h4 {
-    color: #C7413E;
+    color: #0e9aef;
 }
 
 
 .li.cancelled .status:before {
     background-color: #ffffff;
-    border: 2px solid #C7413E;
+    border: 2px solid #0e9aef;
 }
 
 
 /* 
 .li.paused .status h4 {
-    color: #C7413E;
+    color: #0e9aef;
 }
 
 
@@ -719,13 +719,13 @@ pre {
 }
 
 .btn-primary.btn-outline {
-    color: #C7413E;
+    color: #0e9aef;
     background-color: #ffffff;
-    border-color: #C7413E;
+    border-color: #0e9aef;
 }
 .btn-primary.btn-outline:hover { /* , .btn-success.btn-outline:hover, .btn-info.btn-outline:hover, .btn-warning.btn-outline:hover, .btn-danger.btn-outline:hover */
-    background-color: #C7413E;
-    border-color: #C7413E;
+    background-color: #0e9aef;
+    border-color: #0e9aef;
 }
 .fbold{
     font-weight: bold
@@ -767,3 +767,30 @@ pre {
     -webkit-transition-property: width;
     transition-property: width;
 } */
+
+
+
+.md-skin .nav > li > a {
+    padding: 20px 10px;
+}
+
+.navbar-header{
+    padding: 5px 25px;
+}
+
+.seven{
+    font-weight: 500;
+    display: inline;
+    position: relative;
+    font: 37px Helvetica, Sans-Serif;
+    letter-spacing: -5px;
+    color: rgba(0,0,255,0.5);
+    margin-top: -10px;  
+}
+.dapp{
+    font-weight: 500;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
