@@ -43,22 +43,22 @@ type History<'a> = {
     Put: 'a -> unit
 }
 
-let history =
-  let mb =
-    MailboxProcessor.Start
-     (fun (mb:MailboxProcessor<Choice<AsyncReplyChannel<Msgs list>,Msgs>>) ->
-       let rec loop l =
-        async {
-          let! msg = mb.Receive()
-          match msg with
-          |Choice1Of2 r ->
-            r.Reply l
-            return! loop l
-          |Choice2Of2 m ->
-            return! loop (m::l |> List.truncate 50)}
-       loop [])
-  {Get = fun () -> mb.PostAndReply (fun e -> Choice1Of2 e)
-   Put = fun m -> mb.Post(Choice2Of2 m)}
+// let history =
+//   let mb =
+//     MailboxProcessor.Start
+//      (fun (mb:MailboxProcessor<Choice<AsyncReplyChannel<Msgs list>,Msgs>>) ->
+//        let rec loop l =
+//         async {
+//           let! msg = mb.Receive()
+//           match msg with
+//           |Choice1Of2 r ->
+//             r.Reply l
+//             return! loop l
+//           |Choice2Of2 m ->
+//             return! loop (m::l |> List.truncate 50)}
+//        loop [])
+//   {Get = fun () -> mb.PostAndReply (fun e -> Choice1Of2 e)
+//    Put = fun m -> mb.Post(Choice2Of2 m)}
 
 let update clientDispatch msg state =
     printfn "MESSAGE!!!!!!!!!!!!!!!!!!!"
@@ -67,32 +67,33 @@ let update clientDispatch msg state =
         match state with
         | Disconnected -> ()
         | Connected u ->
-            connections.BroadcastClient(RemoveUser u.Name)
-            let msg = SysMsg {Time=System.DateTime.Now; Content = u.Name+" left the room"}
-            history.Put msg
-            connections.BroadcastClient(AddMsg msg)
+            // connections.BroadcastClient(RemoveUser u.Name)
+            // let msg = SysMsg {Time=System.DateTime.Now; Content = u.Name+" left the room"}
+            // history.Put msg
+            // connections.BroadcastClient(AddMsg msg)
+            ()
         Disconnected, Cmd.none
-    | RS msg ->
-        match state, msg with
-        | _, UsersConnected ->
-            let users =
-                connections.GetModels()
-                |> Seq.choose (function Disconnected -> None | Connected u -> Some u)
-                |> Seq.toList
-            clientDispatch (GetUsers users)
-            clientDispatch (AddMsgs (history.Get()))
-            state, Cmd.none
-        | Disconnected, SetUser u ->
-            state, Cmd.none
-        | Disconnected, _  | _, SetUser _ -> state, Cmd.none
-        | (Connected u), SendMsg m ->
-            if String.IsNullOrWhiteSpace m then
-                ()
-            else
-                let msg = ClientMsg (u.Name,{Content=m;Time = DateTime.Now})
-                history.Put msg
-                connections.BroadcastClient(AddMsg msg)
-            state, Cmd.none
+    | RS msg -> Disconnected, Cmd.none
+        // match state, msg with
+        // | _, UserConnected u ->
+        //     let users =
+        //         connections.GetModels()
+        //         |> Seq.choose (function Disconnected -> None | Connected u -> Some u)
+        //         |> Seq.toList
+        //     clientDispatch (GetUsers users)
+        //     clientDispatch (AddMsgs (history.Get()))
+        //     state, Cmd.none
+        // | Disconnected, SetUser u ->
+        //     state, Cmd.none
+        // | Disconnected, _  | _, SetUser _ -> state, Cmd.none
+        // | (Connected u), SendMsg m ->
+        //     if String.IsNullOrWhiteSpace m then
+        //         ()
+        //     else
+        //         let msg = ClientMsg (u.Name,{Content=m;Time = DateTime.Now})
+        //         history.Put msg
+        //         connections.BroadcastClient(AddMsg msg)
+        //     state, Cmd.none
 
 let init (clientDispatch:Dispatch<RemoteClientMsg>) () =
     printfn "Init!!!!!!!"
