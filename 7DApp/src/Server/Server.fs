@@ -76,7 +76,10 @@ let update clientDispatch msg state =
     | RS msg -> 
         match msg with 
         | UserConnected userId -> 
-            { Fake.userState with Users = StateManagement.users } |> SetState |> clientDispatch 
+            { Fake.userState with 
+                Users = StateManagement.users
+                User = { Fake.user with Friends = StateManagement.users |> List.map Friend |> set } 
+                } |> SetState |> clientDispatch 
         Connected Fake.user, Cmd.none
         // match state, msg with
         // | _, UserConnected u ->

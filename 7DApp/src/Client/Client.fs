@@ -55,54 +55,57 @@ importAll "../Client/lib/css/theme/main.css"
 
 
 let view (model : Model) (dispatch : ClientMsg -> unit) =
-    div [] [    
-               
-            div [ Class "top-navigation"
-                  Id "wrapper" ]
-                [
-                    topmenu
-                    div [ Class " gray-bg"
-                          Id "wrapper"]
-                        [
-                            div [ ]
-                                [
-                                    div [ Class "wrapper wrapper-content p-xl ng-scope" ]
-                                        [
-                                            div [ Class "container" ]
-                                                [
-                                                    div [ Class "row"]
-                                                        [
-                                                            div [ Class "col-md-3" ]
-                                                                [
-                                                                    leftpart
-                                                                ]
-                                                            div [ Class "col-md-6" ]
-                                                                [
-                                                                    feed model.Feed
-                                                                ]
-                                                            div [ Class "col-md-3" ]
-                                                                [
-                                                                    rightpart
-                                                                ]
+    match model.Connection with
+    | Disconnected -> div [] [ ] // Loading
+    | Connected userState -> 
+        div [] [    
+                
+                div [ Class "top-navigation"
+                      Id "wrapper" ]
+                    [
+                        topmenu
+                        div [ Class " gray-bg"
+                              Id "wrapper"]
+                            [
+                                div [ ]
+                                    [
+                                        div [ Class "wrapper wrapper-content p-xl ng-scope" ]
+                                            [
+                                                div [ Class "container" ]
+                                                    [
+                                                        div [ Class "row"]
+                                                            [
+                                                                div [ Class "col-md-3" ]
+                                                                    [
+                                                                        leftpart userState.User
+                                                                    ]
+                                                                div [ Class "col-md-6" ]
+                                                                    [
+                                                                        feed model.Feed
+                                                                    ]
+                                                                div [ Class "col-md-3" ]
+                                                                    [
+                                                                        rightpart
+                                                                    ]
 
-                                                                ]
+                                                                    ]
                                                     div [ Class "row"]
                                                         [
                                                             settings
                                                         ]
 
 
-                                                        ]
-                                                ]
-                                            
-                                                        
+                                                            ]
+                                                    ]
+                                                
+                                                            
+                                    ]
+                            ]
+                        footerw
+                                        
+                                
                                 ]
                         ]
-                    footerw
-                                    
-                            
-                            ]
-                    ]
 
 
 #if DEBUG

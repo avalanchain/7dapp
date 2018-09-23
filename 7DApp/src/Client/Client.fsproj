@@ -5,14 +5,16 @@
   <ItemGroup>
     <Compile Include="../Shared/Shared.fs" />
     <Compile Include="ClientMsgModel.fs" />
+
+    <Compile Include="Feed.fs" />
+    <Compile Include="Friends.fs" />
+
+
     <Compile Include="TopMenu.fs" />
     <Compile Include="RightPart.fs" />
     <Compile Include="LeftPart.fs" />
     <Compile Include="Components/Footer.fs" />
-    <Compile Include="Feed.fs" />
     <Compile Include="Settings.fs" />
-
-
 
     <Compile Include="Client.fs" />
   </ItemGroup>

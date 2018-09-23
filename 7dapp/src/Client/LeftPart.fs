@@ -3,6 +3,9 @@ module LeftPart
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+open Shared
+open Friends
+
 type DAppItem = {
     Avatar      : string
     Name        : string
@@ -43,7 +46,7 @@ let item (dapp:DAppItem) = li [ Class "list-group-item" ]
 
 let dapps = chanelData |> Array.map (fun c -> c |> item ) |> Array.toList
 
-let leftpart  =
+let leftpart (user: User) =
     div [ ]
         [ 
             div [ Class "" ]
@@ -94,6 +97,8 @@ let leftpart  =
                                                                 [   strong [ Class "m-r-xxs" ]
                                                                             [ str "32" ]
                                                                     str "Messages" ] ] ] ]
+
+                                            friendsBox (user.Friends |> Seq.toList)
                                         ]    
                                 ]
 
