@@ -73,7 +73,11 @@ let update clientDispatch msg state =
             // connections.BroadcastClient(AddMsg msg)
             ()
         Disconnected, Cmd.none
-    | RS msg -> Disconnected, Cmd.none
+    | RS msg -> 
+        match msg with 
+        | UserConnected userId -> 
+            Fake.userState |> SetState |> clientDispatch 
+        Connected Fake.user, Cmd.none
         // match state, msg with
         // | _, UserConnected u ->
         //     let users =

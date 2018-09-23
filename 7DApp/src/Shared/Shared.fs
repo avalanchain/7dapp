@@ -24,7 +24,7 @@ type UserIdentity = {
     LastName    : string
     Email       : string
     DOB         : string
-    Location    : string
+    Country     : string
     Address     : string
     PostCode    : string
     PhoneNumber : string
@@ -93,3 +93,34 @@ type RemoteServerMsg =
 
 module Remote =
     let socketPath = "/socket"
+
+
+module Fake = 
+
+    let userIdentity = {
+        FirstName   = "John"
+        LastName    = "Smith"
+        Email       = "john@smith.com"
+        DOB         = "01/03/1979"
+        Country     = "US"
+        Address     = "101 Fifth Avenue, NY"
+        PostCode    = "11111"
+        PhoneNumber = "+180088833112"
+    }
+
+    let user = {
+        Id          = UserId "#fakeUser" 
+        AccountName = "@fakeUser"
+        Identity    = userIdentity
+        Avatar      = Avatar "Avatar.jpg"
+        Bio         = Bio "Short Bio"
+        Friends     = set []
+        Channels    = EncryptionKeys Map.empty 
+    }
+
+    let userState = {
+        User            = user
+        Channels        = []
+        SuggestedFriends= []
+        SuggestedDapp   = []
+    }
