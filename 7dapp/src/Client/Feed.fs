@@ -11,8 +11,6 @@ type FeedItem = {
     Time        : string
     ShortTime   : string
     Action      : string
-    // BackgroundColor: string
-    // ForegroundColor: string
 } 
 let dataFeed =
     [|
@@ -48,7 +46,7 @@ let item (feedItem:FeedItem) = div [ Class "feed-element" ]
                                         [ small [ Class "pull-right" ]
                                                 [ str feedItem.ShortTime ]
                                           strong [ Class "m-r" ]
-                                                 [ str "Monica Smith" ]
+                                                 [ str feedItem.Name ]
                                           str feedItem.Action
                                           br [ ]
                                           small [ Class "text-muted" ]
