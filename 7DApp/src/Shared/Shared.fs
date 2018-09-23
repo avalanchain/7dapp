@@ -14,30 +14,25 @@ type ICounterApi =
 
 /// Websockets
 
-type Color =
-    | Red
-    | Green
-    | Blue
-    | Black
-
-type User = {Name : string; Color: Color}
-type Message = {Time : System.DateTime; Content: string}
+type User = { Name : string }
+type Message = { Time : System.DateTime; Content: string }
 
 type Msgs =
-  | ClientMsg of (string*Message)
-  | SysMsg of Message
+    | ClientMsg of (string * Message)
+    | SysMsg of Message
 
 type RemoteClientMsg =
     | QueryConnected
-    | GetUsers of User list
-    | NameStatus of bool
-    | AddUser of User
-    | RemoveUser of string
-    | AddMsg of Msgs
-    | AddMsgs of Msgs list
-    | ColorChange of (string*Color)
+    | GetUsers      of User list
+    | AddUser       of User
+    | RemoveUser    of string
+    | AddMsg        of Msgs
+    | AddMsgs       of Msgs list
 
-type RemoteServerMsg = SetUser of User | ChangeColor of Color | SendMsg of string | UsersConnected
+type RemoteServerMsg = 
+    | SetUser of User 
+    | SendMsg of string 
+    | UserConnected
 
 
 module Remote =

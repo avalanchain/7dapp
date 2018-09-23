@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../Shared/Shared.fs" />
-        <Compile Include="MsgModel.fs" />
+    <Compile Include="ClientMsgModel.fs" />
     
     <Compile Include="TopMenu.fs" />
     <Compile Include="Components/Footer.fs" />

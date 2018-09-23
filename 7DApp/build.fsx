@@ -84,7 +84,6 @@ Target.create "Build" (fun _ ->
 )
 
 Target.create "Run" (fun _ ->
-    printfn "Run aaaa"
     let server = async {
         printfn "watch run %s" serverPath
         runDotNet "watch run" serverPath

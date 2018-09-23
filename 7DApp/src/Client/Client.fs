@@ -15,7 +15,7 @@ open Fable.Helpers.React.Props
 open Fable.PowerPack.Fetch
 
 open Shared
-open MsgModel
+open ClientMsgModel
 
 open Elmish.Bridge
 

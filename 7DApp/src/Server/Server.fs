@@ -63,51 +63,36 @@ let history =
 let update clientDispatch msg state =
     printfn "MESSAGE!!!!!!!!!!!!!!!!!!!"
     match msg with
-     | Closed ->
-          match state with
-          |Disconnected -> ()
-          |Connected u ->
+    | Closed ->
+        match state with
+        | Disconnected -> ()
+        | Connected u ->
             connections.BroadcastClient(RemoveUser u.Name)
             let msg = SysMsg {Time=System.DateTime.Now; Content = u.Name+" left the room"}
             history.Put msg
             connections.BroadcastClient(AddMsg msg)
-          Disconnected, Cmd.none
-     |RS msg ->
-      match state, msg with
-      | _, UsersConnected ->
-          let users =
-            connections.GetModels()
-            |> Seq.choose (function Disconnected -> None | Connected u -> Some u)
-            |> Seq.toList
-          clientDispatch (GetUsers users)
-          clientDispatch (AddMsgs (history.Get()))
-          state, Cmd.none
-      | Disconnected, SetUser u ->
-          if connections.GetModels() |> Seq.exists (function Disconnected -> false | Connected {Name=n} -> n=u.Name) then
-            clientDispatch (AddMsg (SysMsg {Time=System.DateTime.Now; Content = "Name is in use"}))
-            clientDispatch (NameStatus false)
+        Disconnected, Cmd.none
+    | RS msg ->
+        match state, msg with
+        | _, UsersConnected ->
+            let users =
+                connections.GetModels()
+                |> Seq.choose (function Disconnected -> None | Connected u -> Some u)
+                |> Seq.toList
+            clientDispatch (GetUsers users)
+            clientDispatch (AddMsgs (history.Get()))
             state, Cmd.none
-          else
-            let state = Connected u
-            connections.BroadcastClient(AddUser u)
-            let msg = SysMsg {Time=System.DateTime.Now; Content = u.Name+" joined the room"}
-            history.Put msg
-            connections.BroadcastClient(AddMsg msg)
-            clientDispatch(NameStatus true)
+        | Disconnected, SetUser u ->
             state, Cmd.none
-      | Disconnected, _  | _, SetUser _ -> state, Cmd.none
-      | (Connected u),SendMsg m ->
-          if String.IsNullOrWhiteSpace m then
-              ()
-          else
-              let msg = ClientMsg (u.Name,{Content=m;Time = DateTime.Now})
-              history.Put msg
-              connections.BroadcastClient(AddMsg msg)
-          state, Cmd.none
-      | (Connected u),ChangeColor c ->
-          printfn "Connected!!!!!!!"
-          connections.BroadcastClient(ColorChange(u.Name,c))
-          Connected {u with Color = c}, Cmd.none
+        | Disconnected, _  | _, SetUser _ -> state, Cmd.none
+        | (Connected u), SendMsg m ->
+            if String.IsNullOrWhiteSpace m then
+                ()
+            else
+                let msg = ClientMsg (u.Name,{Content=m;Time = DateTime.Now})
+                history.Put msg
+                connections.BroadcastClient(AddMsg msg)
+            state, Cmd.none
 
 let init (clientDispatch:Dispatch<RemoteClientMsg>) () =
     printfn "Init!!!!!!!"
