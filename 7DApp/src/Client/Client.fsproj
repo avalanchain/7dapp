@@ -6,6 +6,18 @@
     <Compile Include="../Shared/Shared.fs" />
     <Compile Include="ClientMsgModel.fs" />
 
+    <Compile Include="Eos/interfacesDemux.fs" />
+    <Compile Include="Eos/interfacesDemuxEos.fs" />
+    <Compile Include="Eos/AbstractActionHandler.fs" />
+    <Compile Include="Eos/AbstractActionReader.fs" />
+    <Compile Include="Eos/BaseActionWatcher.fs" />
+    <Compile Include="Eos/MongoBlock.fs" />
+    <Compile Include="Eos/MongoActionReader.fs" />
+    <Compile Include="Eos/NodeosBlock.fs" />
+    <Compile Include="Eos/NodeosActionReader.fs" />
+
+    <Compile Include="Eos.fs" />
+
     <Compile Include="Feed.fs" />
     <Compile Include="Friends.fs" />
     <Compile Include="Channels.fs" />

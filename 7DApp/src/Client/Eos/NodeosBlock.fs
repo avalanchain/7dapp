@@ -1,5 +1,5 @@
 // ts2fable 0.6.1
-module rec MongoBlock
+module rec NodeosBlock
 open System
 open Fable.Core
 open Fable.Import.JS
@@ -8,14 +8,14 @@ open interfacesDemux
 open interfacesDemuxEos
 
 type [<AllowNullLiteral>] IExports =
-    abstract MongoBlock: MongoBlockStatic
+    abstract NodeosBlock: NodeosBlockStatic
 
-type [<AllowNullLiteral>] MongoBlock =
+type [<AllowNullLiteral>] NodeosBlock =
     inherit Block
     abstract actions: ResizeArray<EosAction> with get, set
     abstract blockInfo: BlockInfo with get, set
-    abstract collectActionsFromBlock: ?rawBlock: obj option -> ResizeArray<EosAction>
+    abstract collectActionsFromBlock: rawBlock: obj option -> ResizeArray<EosAction>
     abstract flattenArray: obj with get, set
 
-type [<AllowNullLiteral>] MongoBlockStatic =
-    [<Emit "new $0($1...)">] abstract Create: rawBlock: obj option -> MongoBlock
+type [<AllowNullLiteral>] NodeosBlockStatic =
+    [<Emit "new $0($1...)">] abstract Create: rawBlock: obj option -> NodeosBlock

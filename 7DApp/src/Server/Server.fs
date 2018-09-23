@@ -116,7 +116,7 @@ let asyncFeed (clientDispatch:Dispatch<RemoteClientMsg>) = async {
 let init (clientDispatch:Dispatch<RemoteClientMsg>) () =
     printfn "Init!!!!!!!"
     clientDispatch QueryConnected
-    asyncFeed clientDispatch |> Async.Start
+    // asyncFeed clientDispatch |> Async.Start
     Disconnected, Cmd.none //Cmd.ofAsync asyncFeed clientDispatch ignore ignore
 
 let server =

@@ -30,6 +30,9 @@ open Channels
 
 // open Fulma
 
+open Eos
+
+printfn "aadsdas %A" Eos.eos
 
 importAll "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 importAll "../Client/lib/css/theme/style.css"

@@ -1,9 +1,0 @@
-{
-  "buildpacks": [
-  {
-    "url" : "heroku/nodejs"
-  },
-  {
-    "url" : "https://github.com/Nhowka/dotnetcore-buildpack"
-  }]
-}
