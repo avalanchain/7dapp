@@ -58,13 +58,13 @@ let inner =
             ]]
 
 let settings = div [ Class "col-lg-12" ]
-                [ div [ Class "ibox float-e-margins" ]
-                    [ div [ Class "ibox-title" ]
-                        [ h5 [ ]
-                            [ str "Settings"
-                               ]
-                          div [ ]
-                            [ 
-                              inner
+                        [ div [ Class "ibox float-e-margins" ]
+                            [ div [ Class "ibox-title" ]
+                                [ h5 [ ]
+                                    [ str "Settings"
+                                       ]
+                                  div [ ]
+                                    [ 
+                                      inner
 
-                            ] ] ] ]
+                                    ] ] ] ]
