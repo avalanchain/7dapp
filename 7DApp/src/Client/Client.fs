@@ -26,6 +26,7 @@ open LeftPart
 open Feed
 open Settings
 open Friends
+open Channels
 
 // open Fulma
 
@@ -92,10 +93,11 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                                                                 ]
 
                                                                         ]
-                                                                | FriendsTab ->
+                                                                | ChannelsTab ->
                                                                     div [ Class "row"]
                                                                         [
-                                                                            friendsBox (con.UserState.User.Friends |> Seq.toList)
+                                                                            //friendsBox (con.UserState.User.Friends |> Seq.toList)
+                                                                            channelsBox (con.UserState.User.Friends |> Seq.toList)
                                                                         ]
                                                                 | SettingsTab ->
                                                                     div [ Class "row"]

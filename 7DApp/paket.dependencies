@@ -9,6 +9,7 @@ group Server
     nuget Microsoft.AspNetCore.StaticFiles
     nuget Fable.Remoting.Giraffe
     nuget FSharp.Data
+    nuget jose-jwt 2.4.0
 
 group Client
     storage: none

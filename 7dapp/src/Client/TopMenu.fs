@@ -16,8 +16,8 @@ type TopMenuItem = {
 let topMenu = [
     {   Caption = "Our Motto"
         Tab     = Tab.MainTab }
-    {   Caption = "Friends"
-        Tab     = Tab.FriendsTab }
+    {   Caption = "Channels"
+        Tab     = ChannelsTab }
     {   Caption = "Settings"
         Tab     = Tab.SettingsTab }
 ]

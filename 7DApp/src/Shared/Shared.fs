@@ -115,8 +115,9 @@ and Dapp  = Dapp of string
 
 
 type Channel = {
-    Id      : ChannelId
-    Messages: Message[]
+    Id          : ChannelId
+    Participants: Friend 
+    Messages    : Message[]
 }
 
 type UserState = {
@@ -143,17 +144,10 @@ type RemoteClientMsg =
     | QueryConnected
     | SetState          of UserState
     | AddFeedItem       of FeedItem
-    // | GetUsers      of User list
-    // | AddUser       of User
-    // | RemoveUser    of string
-    // | AddMsg        of Msgs
-    // | AddMsgs       of Msgs list
+    | ChannelUpdated    of Channel
 
 type RemoteServerMsg = 
-    // | SetUser       of User 
-    // | SendMsg       of string 
     | UserConnected of Id: UserId
-    // | GetUsers
 
 
 module Remote =
@@ -163,22 +157,22 @@ module Remote =
 module Fake = 
 
     let userIdentity = {
-        FirstName   = "John"
-        LastName    = "Smith"
-        Email       = "john@smith.com"
-        DOB         = "01/03/1979"
-        Country     = "US"
-        Address     = "101 Fifth Avenue, NY"
-        PostCode    = "11111"
-        PhoneNumber = "+180088833112"
+        FirstName   = "Vasily"
+        LastName    = "Kuznetsov"
+        Email       = "darkvasyak@gmail.com"
+        DOB         = "26/11/1992"
+        Country     = "RU"
+        Address     = "B. Marienskaya, 3"
+        PostCode    = "129085"
+        PhoneNumber = "+79163549100"
     }
 
     let user = {
-        Id          = UserId "#fakeUser" 
-        AccountName = "@fakeUser"
+        Id          = UserId "#darkvasyak25" 
+        AccountName = "@darkvasyak25"
         Identity    = userIdentity
         Avatar      = Avatar "Avatar.jpg"
-        Bio         = Bio "Short Bio"
+        Bio         = Bio "Vasily is a professional blockchain entrepreneur who loves EOS and wants to make the World a better place"
         Friends     = set []
         Channels    = EncryptionKeys Map.empty 
     }

@@ -21,7 +21,7 @@ module Server =
 
 type Tab =
     | MainTab
-    | FriendsTab
+    | ChannelsTab
     | SettingsTab
 
 type ClientMsg =
