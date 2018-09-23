@@ -10,7 +10,7 @@ let footerw  =
                 [ str "Powered " ]
               str "by "
               a [ Href "http://7dapp.net" ]
-                [ str "7DApp " ]
+                [ str "7DApp Team " ]
               str "© 2018" ]
           div [ ]
             [ ] ]

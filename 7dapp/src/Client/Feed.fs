@@ -36,7 +36,7 @@ let feed (feedItems: FeedItem list)  =
                       [ h5 [  ]
                           [ str "Your daily feed" ]
                         div [ Class "ibox-tools" ]
-                          [ span [ Class "label label-warning-light pull-right" ]
+                          [ span [ Class "label label-success pull-right" ]
                               [ str (sprintf "%d new messages" (feedItems |> List.length)) ] ] ]
                   div [ Class "ibox-content" ]
                       [ div [ ]

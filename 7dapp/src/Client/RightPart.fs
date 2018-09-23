@@ -13,12 +13,12 @@ type DAppItem = {
 } 
 let chanelData =
     [|
-        {   Avatar      = "../img/avatar.jpg"
+        {   Avatar      = "../img/dapplogo.png"
             Type        = "Collectibles"
             Id          = "12wbshgh-sadi-sdands"
             Name        = "EOSBET"
             Users       = 123      }        
-        {   Avatar      = "../img/avatar.jpg"
+        {   Avatar      = "../img/dapplogo.png"
             Type        = "Gambling"
             Id          = "12ebshgh-sadi-sdands"
             Name        = "WIZARDS"
@@ -30,17 +30,20 @@ let item (dapp:DAppItem) = div [ Class "feed-element" ]
                                     [ a [ 
                                           Class "pull-left" ]
                                         [ img [ Alt "image"
-                                                Class "img-circle"
+                                                Class "w100 m-r-lg"
                                                 Src dapp.Avatar ] ]
                                       div [ Class "media-body " ]
-                                        [ small [ Class "pull-right" ]
-                                                [ str dapp.Type ]
+                                        [ 
                                           strong [ Class "m-r" ]
                                                  [ str dapp.Name ]
                                           //str (string dapp.Users)
                                           br [ ]
                                           small [ Class "text-muted" ]
-                                            [ str (string dapp.Users + " users") ] ] ]
+                                            [ str (string dapp.Users + " users") ] ]
+                                            // small [ Class "pull-right" ]
+                                            //     [ str dapp.Type ]
+                                            
+                                             ]
 
 let trendDapps = chanelData |> Array.map (fun c -> c |> item ) |> Array.toList
 let rightpart  =
@@ -54,7 +57,7 @@ let rightpart  =
                             ]
                         span [ Class "pull-right"]
                              [
-                                  i [ Class "fa fa-fire " ]
+                                  i [ Class "fa fa-fire text-danger" ]
                                           [ ]
                              ]  
                         div [ Class "ibox-tools" ]
