@@ -45,19 +45,73 @@ and Friend  = Friend    of User
 
 
 type Message = {    
-    Time    : System.DateTime
-    Content : MessageContent }
+    Content : MessageContent
+    Action  : string 
+    User       : User
+    Time       : string
+    ShortTime  : string
+    }
 and MessageContent = 
     | Text  of string
     | Image of string
     | File  of string
     | Payment of Payment
-and Payment = {
+
+and Invest = {
+    Text       : string
+    Money      : decimal
+    Dapp       : Dapp
+    Action     : string 
+    User       : User
+    Time       : string
+    ShortTime  : string
+
+}
+and Image = {
     Asset   : Asset
     Amount  : decimal
 }
+and Payment = {
+    Action     : string 
+    Asset      : Asset
+    Amount     : decimal
+    Money      : decimal
+    Dapp       : Dapp
+    User       : User
+    Time       : string
+    ShortTime  : string
+}
+and Edit = {
+    Action     : string 
+    Amount     : decimal
+    Dapp       : Dapp
+    User       : User
+    Text       : string
+    Time       : string
+    ShortTime  : string
+    }
+and Game = {
+    Action     : string 
+    Amount     : decimal
+    Money      : decimal
+    Dapp       : Dapp
+    User       : User
+    Text       : string
+    Time       : string
+    ShortTime  : string
+    }
+and Trade = {
+    Action     : string 
+    Money      : decimal
+    Dapp       : Dapp
+    User       : User
+    ToMoney      : decimal
+    Time       : string
+    ShortTime  : string
+    }
+
 and Asset = Asset of string
-and Dapp  = Dapp
+and Dapp  = Dapp of string
 
 
 type Channel = {

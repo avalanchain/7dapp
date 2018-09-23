@@ -54,6 +54,11 @@ let topmenu (model: Model) dispatch =
                                 [ i [ Class "fa fa-envelope text-muted" ]
                                     [ ]
                                   span [ Class "label label-warning" ]
-                                    [ str "16" ] ]
+                                    [ 
+                                         yield match model.Connection with
+                                                | Disconnected -> span [] [ ] // Loading
+                                                | Connected con -> 
+                                                    div [] [ str (string con.Feed.Length)  ] 
+                                                 ] ]
                          ] ] ] ] ]
         ]
