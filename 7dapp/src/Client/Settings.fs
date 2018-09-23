@@ -6,7 +6,8 @@ open Fable.Helpers.React.Props
 
 open Shared
 open Friends
-let inner (user: User) = 
+let inner (userState: UserState) = 
+    let user = userState.User
     div [ ]
         [
             form [ Class "form-horizontal" ]
@@ -90,7 +91,7 @@ let inner (user: User) =
             [ label [ Class "col-lg-2 control-label" ]
                 [ str "Social" ]
               div [ Class "col-lg-10" ]
-                [ friendsBox (user.Friends |> Seq.toList) ] ]
+                [ friendsBox (userState.Friends |> Seq.toList) ] ]
           // div [ Class "form-group" ]
           //   [ label [ Class "col-lg-2 control-label" ]
           //       [ str "Static control" ]
@@ -100,14 +101,15 @@ let inner (user: User) =
           
             ]]
 
-let settings (user: User) = div [ Class "col-lg-12" ]
-                                [ div [ Class "ibox float-e-margins" ]
-                                    [ div [ Class "ibox-title" ]
-                                        [ h5 [ ]
-                                            [ str "Settings"
-                                               ]
-                                          div [ ]
-                                            [ 
-                                              inner user
-                                              
-                                            ] ] ] ]
+let settings (userState: UserState) = 
+  div [ Class "col-lg-12" ]
+    [ div [ Class "ibox float-e-margins" ]
+        [ div [ Class "ibox-title" ]
+            [ h5 [ ]
+                [ str "Settings"
+                   ]
+              div [ ]
+                [ 
+                  inner userState
+                  
+              ] ] ] ]

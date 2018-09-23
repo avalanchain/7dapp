@@ -26,8 +26,8 @@ let users =
                         }
             Avatar      = Avatar (r.Avatar)
             Bio         = Bio (r.Bio)
-            Friends     = set []
-            Channels    = EncryptionKeys Map.empty 
+            // Friends     = set []
+            // Channels    = EncryptionKeys Map.empty 
         } ]
 
 let dataFeed: FeedItem[] =

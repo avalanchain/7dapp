@@ -16,7 +16,6 @@ type UserId     = UserId    of string
 type ChannelId  = ChannelId of string
 
 type EncryptionKey  = EncryptionKey //of string
-type EncryptionKeys = EncryptionKeys of Map<ChannelId, EncryptionKey> 
 
 
 type UserIdentity = {
@@ -36,15 +35,19 @@ type User = {
     Identity    : UserIdentity
     Avatar      : Avatar
     Bio         : Bio
-    Friends     : Set<Friend>
-    Channels    : EncryptionKeys
 }
 and Avatar  = Avatar    of string
 and Bio     = Bio       of string
 and Friend  = Friend    of User
-
-
-type Message = {    
+and Channel = {
+    Id              : ChannelId
+    Name            : string
+    Participants    : Friend list 
+    Messages        : (User * Message)[]
+    EncryptionKey   : EncryptionKey
+}
+and Channels = Map<ChannelId, Channel> 
+and Message = {    
     Content : MessageContent
     Action  : string 
     User       : User
@@ -114,18 +117,14 @@ and Asset = Asset of string
 and Dapp  = Dapp of string
 
 
-type Channel = {
-    Id          : ChannelId
-    Participants: Friend 
-    Messages    : Message[]
-}
-
 type UserState = {
-    User            : User
-    Channels        : Channel list
-    SuggestedFriends: Friend list
-    SuggestedDapp   : Dapp list
-    Users           : User list
+    User                : User
+    Channels            : Channels
+    Friends             : Set<Friend>
+    SuggestedFriends    : Friend list
+    SuggestedChannels   : Channels
+    SuggestedDapp       : Dapp list
+    Users               : User list
 }
 
 // type Msgs =
@@ -173,15 +172,15 @@ module Fake =
         Identity    = userIdentity
         Avatar      = Avatar "Avatar.jpg"
         Bio         = Bio "Vasily is a professional blockchain entrepreneur who loves EOS and wants to make the World a better place"
-        Friends     = set []
-        Channels    = EncryptionKeys Map.empty 
     }
 
     let userState = {
-        User            = user
-        Channels        = []
-        SuggestedFriends= []
-        SuggestedDapp   = []
-        Users           = []
+        User                = user
+        Friends             = set []
+        Channels            = [] |> Map.ofList
+        SuggestedFriends    = []
+        SuggestedChannels   = [] |> Map.ofList
+        SuggestedDapp       = []
+        Users               = []
     }
 

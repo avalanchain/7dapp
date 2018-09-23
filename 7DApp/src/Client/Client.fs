@@ -97,12 +97,12 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                                                     div [ Class "row"]
                                                                         [
                                                                             //friendsBox (con.UserState.User.Friends |> Seq.toList)
-                                                                            channelsBox (con.UserState.User.Friends |> Seq.toList)
+                                                                            channelsBox (con.UserState.Channels)
                                                                         ]
                                                                 | SettingsTab ->
                                                                     div [ Class "row"]
                                                                         [
-                                                                            settings con.UserState.User
+                                                                            settings con.UserState
                                                                         ]
 
                                                     ]

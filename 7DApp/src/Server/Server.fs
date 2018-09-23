@@ -78,7 +78,8 @@ let update clientDispatch msg state =
         | UserConnected userId -> 
             { Fake.userState with 
                 Users = StateManagement.users
-                User = { Fake.user with Friends = StateManagement.users |> List.map Friend |> set } 
+                User = Fake.user 
+                Friends = StateManagement.users |> List.map Friend |> set 
                 } |> SetState |> clientDispatch 
         Connected Fake.user, Cmd.none
         // match state, msg with

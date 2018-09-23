@@ -54,17 +54,17 @@ let private ibox (friends: Friend list) =
                         [ ] ] ] ] ] 
 
 
-let ibox2 (friends: Friend list) =
+let ibox2 (channel: Channel) =
   div [ Class "social-feed-box" ]
       [ 
         div [ Class "ibox-title" ]
             [ span [ Class "label label-primary pull-right" ]
                 [ str "NEW" ]
               h5 [ ]
-                [ str "IT-01 - Design Team" ] ]
+                [ str channel.Name ] ]
         div [ Class "ibox-content" ]
           [ div [ Class "team-members" ]
-              [ for (Friend friend) in friends ->
+              [ for (Friend friend) in channel.Participants ->
                 let (Avatar avatar) = friend.Avatar
                 a [ Href "" ]
                   [ img [ Alt friend.AccountName
@@ -122,8 +122,8 @@ let ibox2 (friends: Friend list) =
               ]
 
 
-let channelsBox (friends: Friend list) = 
+let channelsBox (channels: Channels) =
     div [ Class "row" ]
         [ div [ Class "col-lg-12" ]
-            [ for i in 1 .. 12 -> ibox2 friends ]
+            [ for channel in channels -> ibox2 (channel.Value) ]
         ]

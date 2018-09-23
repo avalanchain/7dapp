@@ -65,4 +65,10 @@ let update (msg : ClientMsg) (model : Model)  =
             match model.Connection with  
             | Connected con -> { model with Connection = Connected { con with Feed = fi :: con.Feed |> List.truncate 10 } }, Cmd.none
             | Disconnected -> model, Cmd.none
+        | ChannelUpdated channel ->
+            match model.Connection with  
+            | Connected con ->
+                let userState = { con.UserState with Channels = con.UserState.Channels |> Map.add channel.Id channel } 
+                { model with Connection = Connected { con with UserState = userState } }, Cmd.none
+            | Disconnected -> model, Cmd.none
 
