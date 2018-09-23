@@ -99,10 +99,20 @@ let update clientDispatch msg state =
         //         connections.BroadcastClient(AddMsg msg)
         //     state, Cmd.none
 
+
+
+let asyncFeed (clientDispatch:Dispatch<RemoteClientMsg>) = async {
+    do! Async.Sleep 1000
+    for i in 0 .. 1000000 do 
+        do StateManagement.dataFeed.[i % StateManagement.dataFeed.Length ] |> AddFeedItem |> clientDispatch
+        do! Async.Sleep 300 
+}
+
 let init (clientDispatch:Dispatch<RemoteClientMsg>) () =
     printfn "Init!!!!!!!"
     clientDispatch QueryConnected
-    Disconnected, Cmd.none
+    asyncFeed clientDispatch |> Async.Start
+    Disconnected, Cmd.none //Cmd.ofAsync asyncFeed clientDispatch ignore ignore
 
 let server =
     Bridge.mkServer Remote.socketPath init update

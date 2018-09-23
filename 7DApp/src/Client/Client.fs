@@ -77,7 +77,7 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                                                 ]
                                                             div [ Class "col-md-6" ]
                                                                 [
-                                                                    feed
+                                                                    feed model.Feed
                                                                 ]
                                                             div [ Class "col-md-3" ]
                                                                 [

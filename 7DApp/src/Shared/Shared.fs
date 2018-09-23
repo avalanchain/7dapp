@@ -77,9 +77,18 @@ type UserState = {
 //     | ClientMsg of (string * Message)
 //     | SysMsg of Message
 
+type FeedItem = {
+    Avatar      : string
+    Name        : string
+    Time        : string
+    ShortTime   : string
+    Action      : string
+} 
+
 type RemoteClientMsg =
     | QueryConnected
     | SetState          of UserState
+    | AddFeedItem       of FeedItem
     // | GetUsers      of User list
     // | AddUser       of User
     // | RemoveUser    of string
@@ -127,3 +136,4 @@ module Fake =
         SuggestedDapp   = []
         Users           = []
     }
+

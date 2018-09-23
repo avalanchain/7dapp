@@ -32,11 +32,13 @@ type Connection =
 
 type Model = {
     Connection      : Connection
+    Feed            : FeedItem list
 }
 
 let init () =
     {
         Connection  = Disconnected
+        Feed        = []
     }, Cmd.none
 let update (msg : ClientMsg) (model : Model)  =
     match msg with
@@ -49,4 +51,6 @@ let update (msg : ClientMsg) (model : Model)  =
             model, Cmd.none
         | SetState userState ->
             { model with Connection = Connected userState }, Cmd.none
+        | AddFeedItem fi -> 
+            { model with Feed = fi :: model.Feed |> List.truncate 10 }, Cmd.none
 

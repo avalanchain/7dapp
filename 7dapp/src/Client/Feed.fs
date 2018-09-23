@@ -4,37 +4,10 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.PowerPack.Date.Local
 
+open Shared
 
-type FeedItem = {
-    Avatar      : string
-    Name        : string
-    Time        : string
-    ShortTime   : string
-    Action      : string
-} 
-let dataFeed =
-    [|
-        {   Avatar      = "../img/avatar.jpg"
-            Name        = "Monica Smith"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
-            Action      = "posted a new blog." }
-        {   Avatar      = "../img/avatar.jpg"
-            Name        = "Mark Johnson"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
-            Action      = "posted a new blog." }
-        {   Avatar      = "../img/avatar.jpg"
-            Name        = "Janet Rosowski"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
-            Action      = "posted a new blog." }
-        {   Avatar      = "../img/avatar.jpg"
-            Name        = "Kim Smith"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
-            Action      = "posted a new blog." }
-    |]
+open ClientMsgModel
+
 
 let item (feedItem:FeedItem) = div [ Class "feed-element" ]
                                     [ a [ 
@@ -51,8 +24,10 @@ let item (feedItem:FeedItem) = div [ Class "feed-element" ]
                                           br [ ]
                                           small [ Class "text-muted" ]
                                             [ str feedItem.Time ] ] ]
-let feeds = dataFeed |> Array.map (fun f -> f |> item ) |> Array.toList
-let feed  =
+let feeds (feedItems: FeedItem list) = 
+    feedItems |> List.map (fun f -> f |> item )
+
+let feed (feedItems: FeedItem list)  =
     div [ ]
         [ 
             div [ Class "ibox float-e-margins" ]
@@ -62,11 +37,11 @@ let feed  =
                           [ str "Your daily feed" ]
                         div [ Class "ibox-tools" ]
                           [ span [ Class "label label-warning-light pull-right" ]
-                              [ str (string dataFeed.Length + " new messages") ] ] ]
+                              [ str (sprintf "%d new messages" (feedItems |> List.length)) ] ] ]
                   div [ Class "ibox-content" ]
                       [ div [ ]
                           [ div [ Class "feed-activity-list" ]
-                                feeds
+                                (feeds feedItems)
                             button [ Class "btn btn-primary btn-block m-t" ]
                                    [ i [ Class "fa fa-arrow-down" ]
                                           [ ]
