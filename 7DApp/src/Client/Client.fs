@@ -24,6 +24,7 @@ open Footer
 open RightPart
 open LeftPart
 open Feed
+open Settings
 
 // open Fulma
 
@@ -85,6 +86,12 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                                                 ]
 
                                                                 ]
+                                                    div [ Class "row"]
+                                                        [
+                                                            settings
+                                                        ]
+
+
                                                         ]
                                                 ]
                                             

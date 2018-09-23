@@ -105,7 +105,7 @@ let asyncFeed (clientDispatch:Dispatch<RemoteClientMsg>) = async {
     do! Async.Sleep 1000
     for i in 0 .. 1000000 do 
         do StateManagement.dataFeed.[i % StateManagement.dataFeed.Length ] |> AddFeedItem |> clientDispatch
-        do! Async.Sleep 300 
+        do! Async.Sleep 3000 
 }
 
 let init (clientDispatch:Dispatch<RemoteClientMsg>) () =

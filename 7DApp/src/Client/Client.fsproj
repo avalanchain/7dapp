@@ -10,6 +10,7 @@
     <Compile Include="LeftPart.fs" />
     <Compile Include="Components/Footer.fs" />
     <Compile Include="Feed.fs" />
+    <Compile Include="Settings.fs" />
 
 
 
