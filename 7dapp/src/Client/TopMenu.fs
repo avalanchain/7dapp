@@ -14,7 +14,7 @@ type TopMenuItem = {
 }
 
 let topMenu = [
-    {   Caption = "Our Motto"
+    {   Caption = "EOS FEED"
         Tab     = Tab.MainTab }
     {   Caption = "Channels"
         Tab     = ChannelsTab }
