@@ -25,6 +25,7 @@ open RightPart
 open LeftPart
 open Feed
 open Settings
+open Friends
 
 // open Fulma
 
@@ -63,7 +64,7 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                 div [ Class "top-navigation"
                       Id "wrapper" ]
                     [
-                        topmenu dispatch
+                        topmenu model dispatch
                         div [ Class " gray-bg"
                               Id "wrapper"]
                             [
@@ -90,6 +91,11 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                                                                     rightpart
                                                                                 ]
 
+                                                                        ]
+                                                                | FriendsTab ->
+                                                                    div [ Class "row"]
+                                                                        [
+                                                                            friendsBox (con.UserState.User.Friends |> Seq.toList)
                                                                         ]
                                                                 | SettingsTab ->
                                                                     div [ Class "row"]

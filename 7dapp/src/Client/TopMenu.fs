@@ -6,8 +6,23 @@ open Fable.Helpers.React.Props
 
 open Shared
 open ClientMsgModel
+open Fable.Import.RemoteDev
 
-let topmenu dispatch = 
+type TopMenuItem = {
+    Caption : string
+    Tab     : Tab
+}
+
+let topMenu = [
+    {   Caption = "Our Motto"
+        Tab     = Tab.MainTab }
+    {   Caption = "Friends"
+        Tab     = Tab.FriendsTab }
+    {   Caption = "Settings"
+        Tab     = Tab.SettingsTab }
+]
+
+let topmenu (model: Model) dispatch = 
     div [ ]
         [
             div [ Class "row border-bottom white-bg" ]
@@ -26,23 +41,10 @@ let topmenu dispatch =
               div [ Class "navbar-collapse collapse"
                     Id "navbar" ]
                 [ ul [ Class "nav navbar-nav" ]
-                    [ li [ Class "active" ]
-                        [ a [ OnClick (fun _ -> MainTab |> SwitchTab |> dispatch ) ]
-                            [ str "Our Motto" ] ]
-                      li [ ]
-                        [ a [ Href "" ]
-                            [ str "Friends"
-                                ]
-                        
-                                     ]
-                      li [ ]
-                        [ a [   OnClick (fun _ -> SettingsTab |> SwitchTab |> dispatch ) ]
-                            [ str "Settings"
-                                ]
-                        
-                                     ]              
-                                     
-                                      ]
+                    [   for t in topMenu ->
+                            li (if model.ActiveTab = t.Tab then [ Class "active" ] else [])
+                                [ a [ OnClick (fun _ -> t.Tab |> SwitchTab |> dispatch ) ]
+                                    [ str t.Caption ] ] ]
                   ul [ Class "nav navbar-top-links navbar-right" ]
                     [ li [ ]
                         [ 
