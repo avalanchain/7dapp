@@ -10,7 +10,9 @@
     <Compile Include="Friends.fs" />
     <Compile Include="Channels.fs" />
 
-
+    <Compile Include="lib/ChartJs.fs" />
+    <Compile Include="lib/react-chartjs-2.fs" />
+    <Compile Include="Chart.fs" />
     <Compile Include="TopMenu.fs" />
     <Compile Include="RightPart.fs" />
     <Compile Include="LeftPart.fs" />

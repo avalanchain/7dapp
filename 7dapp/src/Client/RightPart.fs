@@ -3,6 +3,7 @@ module RightPart
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+open Chart
 
 type DAppItem = {
     Avatar      : string
@@ -13,16 +14,26 @@ type DAppItem = {
 } 
 let chanelData =
     [|
-        {   Avatar      = "../img/dapplogo.png"
+        {   Avatar      = "../dapps/EOSbet.png"
             Type        = "Collectibles"
             Id          = "12wbshgh-sadi-sdands"
             Name        = "EOSBET"
-            Users       = 123      }        
-        {   Avatar      = "../img/dapplogo.png"
+            Users       = 2123      }        
+        {   Avatar      = "../dapps/Wizards.one.png"
             Type        = "Gambling"
             Id          = "12ebshgh-sadi-sdands"
             Name        = "WIZARDS"
-            Users       = 123      }        
+            Users       = 9023      }     
+        {   Avatar      = "../dapps/Karma.png"
+            Type        = "Collectibles"
+            Id          = "12wbshgh-sadi-sdands"
+            Name        = "KARMA"
+            Users       = 823      }        
+        {   Avatar      = "../dapps/Wizz.png"
+            Type        = "Gambling"
+            Id          = "12ebshgh-sadi-sdands"
+            Name        = "WIZZ"
+            Users       = 1123      } 
      
     |]
 
@@ -66,4 +77,7 @@ let rightpart  =
                       [ div [ ]
                           trendDapps
                            ] ]
+
+            referralInfo
+
                      ]
