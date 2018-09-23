@@ -19,38 +19,49 @@ module Server =
       |> Remoting.withRouteBuilder Route.builder
       |> Remoting.buildProxy<ICounterApi>
 
+type Tab =
+    | MainTab
+    | SettingsTab
 
 type ClientMsg =
     | RC of RemoteClientMsg
     | SendUser
     | ConnectionLost
+    | SwitchTab of Tab
 
 type Connection =
     | Disconnected
-    | Connected of UserState
-
+    | Connected of Connected
+and Connected = {
+    UserState   : UserState
+    Feed        : FeedItem list
+}
 
 type Model = {
-    Connection      : Connection
-    Feed            : FeedItem list
+    Connection : Connection
+    ActiveTab  : Tab 
 }
 
 let init () =
     {
         Connection  = Disconnected
-        Feed        = []
+        ActiveTab = Tab.MainTab
     }, Cmd.none
 let update (msg : ClientMsg) (model : Model)  =
     match msg with
     | SendUser -> model, Cmd.none
-    | ConnectionLost -> {model with Connection = Disconnected}, Cmd.none
+    | ConnectionLost -> { model with Connection = Disconnected }, Cmd.none
+    | SwitchTab tab -> { model with ActiveTab = tab }, Cmd.none
     | RC msg ->
         match msg with
         | QueryConnected ->
             Bridge.Send(UserConnected (UserId "u"))
             model, Cmd.none
         | SetState userState ->
-            { model with Connection = Connected userState }, Cmd.none
-        | AddFeedItem fi -> 
-            { model with Feed = fi :: model.Feed |> List.truncate 10 }, Cmd.none
+            { model with Connection = Connected {   UserState = userState
+                                                    Feed        = [] } }, Cmd.none
+        | AddFeedItem fi ->
+            match model.Connection with  
+            | Connected con -> { model with Connection = Connected { con with Feed = fi :: con.Feed |> List.truncate 10 } }, Cmd.none
+            | Disconnected -> model, Cmd.none
 

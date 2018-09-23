@@ -57,13 +57,13 @@ importAll "../Client/lib/css/theme/main.css"
 let view (model : Model) (dispatch : ClientMsg -> unit) =
     match model.Connection with
     | Disconnected -> div [] [ ] // Loading
-    | Connected userState -> 
+    | Connected con -> 
         div [] [    
                 
                 div [ Class "top-navigation"
                       Id "wrapper" ]
                     [
-                        topmenu
+                        topmenu dispatch
                         div [ Class " gray-bg"
                               Id "wrapper"]
                             [
@@ -73,30 +73,32 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                             [
                                                 div [ Class "container" ]
                                                     [
-                                                        div [ Class "row"]
-                                                            [
-                                                                div [ Class "col-md-3" ]
-                                                                    [
-                                                                        leftpart userState.User
-                                                                    ]
-                                                                div [ Class "col-md-6" ]
-                                                                    [
-                                                                        feed model.Feed
-                                                                    ]
-                                                                div [ Class "col-md-3" ]
-                                                                    [
-                                                                        rightpart
-                                                                    ]
+                                                        yield match model.ActiveTab with
+                                                                | MainTab ->
+                                                                    div [ Class "row"]
+                                                                        [
+                                                                            div [ Class "col-md-3" ]
+                                                                                [
+                                                                                    leftpart con.UserState.User
+                                                                                ]
+                                                                            div [ Class "col-md-6" ]
+                                                                                [
+                                                                                    feed con.Feed
+                                                                                ]
+                                                                            div [ Class "col-md-3" ]
+                                                                                [
+                                                                                    rightpart
+                                                                                ]
 
-                                                                    ]
-                                                    div [ Class "row"]
-                                                        [
-                                                            settings
-                                                        ]
+                                                                        ]
+                                                                | SettingsTab ->
+                                                                    div [ Class "row"]
+                                                                        [
+                                                                            settings
+                                                                        ]
 
-
-                                                            ]
                                                     ]
+                                                ]
                                                 
                                                             
                                     ]
