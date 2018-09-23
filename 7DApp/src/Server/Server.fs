@@ -83,41 +83,23 @@ let update clientDispatch msg state =
                 Channels = StateManagement.channels
                 } |> SetState |> clientDispatch 
         Connected Fake.user, Cmd.none
-        // match state, msg with
-        // | _, UserConnected u ->
-        //     let users =
-        //         connections.GetModels()
-        //         |> Seq.choose (function Disconnected -> None | Connected u -> Some u)
-        //         |> Seq.toList
-        //     clientDispatch (GetUsers users)
-        //     clientDispatch (AddMsgs (history.Get()))
-        //     state, Cmd.none
-        // | Disconnected, SetUser u ->
-        //     state, Cmd.none
-        // | Disconnected, _  | _, SetUser _ -> state, Cmd.none
-        // | (Connected u), SendMsg m ->
-        //     if String.IsNullOrWhiteSpace m then
-        //         ()
-        //     else
-        //         let msg = ClientMsg (u.Name,{Content=m;Time = DateTime.Now})
-        //         history.Put msg
-        //         connections.BroadcastClient(AddMsg msg)
-        //     state, Cmd.none
 
 
 
 let asyncFeed (clientDispatch:Dispatch<RemoteClientMsg>) = async {
+    do! Async.Sleep 100
+    for i in 0 .. 10 do 
+        do StateManagement.dataFeed.[i % StateManagement.dataFeed.Length ] |> AddFeedItem |> clientDispatch
     do! Async.Sleep 1000
     for i in 0 .. 1000000 do 
         do StateManagement.dataFeed.[i % StateManagement.dataFeed.Length ] |> AddFeedItem |> clientDispatch
-        do! Async.Sleep 3000 
+        do! Async.Sleep 1000 
 }
 
 let init (clientDispatch:Dispatch<RemoteClientMsg>) () =
-    printfn "Init!!!!!!!"
     clientDispatch QueryConnected
-    // asyncFeed clientDispatch |> Async.Start
-    Disconnected, Cmd.none //Cmd.ofAsync asyncFeed clientDispatch ignore ignore
+    asyncFeed clientDispatch |> Async.Start
+    Disconnected, Cmd.none
 
 let server =
     Bridge.mkServer Remote.socketPath init update
