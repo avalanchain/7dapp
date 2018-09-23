@@ -123,6 +123,7 @@ let webApp =
 let configureApp (app : IApplicationBuilder) =
     app.UseDefaultFiles()
        .UseStaticFiles()
+       .UseDirectoryBrowser()
        .UseWebSockets()
        .UseGiraffe webApp
 

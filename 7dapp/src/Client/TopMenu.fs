@@ -1,11 +1,13 @@
 
-module Client.TopMenu
+module TopMenu
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 let topmenu = 
-div [ Class "row border-bottom white-bg" ]
+div [ ]
+    [
+        div [ Class "row border-bottom white-bg" ]
     [ nav [ Class "navbar navbar-static-top"
             Role "navigation" ]
         [ div [ Class "navbar-header" ]
@@ -49,3 +51,4 @@ div [ Class "row border-bottom white-bg" ]
                         [  i [ Class "fa fa-sign-out" ]
                              [ ]
                            str "Log out" ] ] ] ] ] ]
+    ]

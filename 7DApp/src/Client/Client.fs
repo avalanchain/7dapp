@@ -19,10 +19,13 @@ open ClientMsgModel
 
 open Elmish.Bridge
 
-open Client.TopMenu
-open Client.Footer
+open TopMenu
+open Footer
+open RightPart
+open LeftPart
+open Feed
 
-open Fulma
+// open Fulma
 
 
 importAll "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
@@ -50,32 +53,49 @@ importAll "../Client/lib/css/theme/main.css"
 //     | InitialCountLoaded of Result<Counter, exn>
 
 
-let button txt onClick =
-    Button.button
-        [ Button.IsFullWidth
-          Button.Color IsPrimary
-          Button.OnClick onClick ]
-        [ str txt ]
-
 let view (model : Model) (dispatch : ClientMsg -> unit) =
     div [] [    
                
-                div []
-        [
-            topmenu
-            div [ Class " gray-bg"
-                  ]
+            div [ Class "top-navigation"
+                  Id "wrapper" ]
                 [
-                    div [ Class "row"]
+                    topmenu
+                    div [ Class " gray-bg"
+                          Id "wrapper"]
                         [
+                            div [ ]
+                                [
+                                    div [ Class "wrapper wrapper-content p-xl ng-scope" ]
+                                        [
+                                            div [ Class "container" ]
+                                                [
+                                                    div [ Class "row"]
+                                                        [
+                                                            div [ Class "col-md-3" ]
+                                                                [
+                                                                    leftpart
+                                                                ]
+                                                            div [ Class "col-md-6" ]
+                                                                [
+                                                                    feed
+                                                                ]
+                                                            div [ Class "col-md-3" ]
+                                                                [
+                                                                    rightpart
+                                                                ]
 
+                                                                ]
+                                                        ]
+                                                ]
+                                            
+                                                        
+                                ]
                         ]
-                ]
-            footerw
+                    footerw
+                                    
                             
-                    
+                            ]
                     ]
-            ]
 
 
 #if DEBUG

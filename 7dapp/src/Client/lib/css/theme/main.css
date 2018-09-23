@@ -18,11 +18,11 @@
 }
 
 button.btn-primary.dim {
-    box-shadow: inset 0 0 0 #B73C3A, 0 5px 0 0 #B73C3A, 0 10px 5px #999999;
+    box-shadow: inset 0 0 0 #0482ce, 0 5px 0 0 #0482ce, 0 10px 5px #999999;
 }
 
 button.btn-primary.dim:active {
-    box-shadow: inset 0 0 0 #B73C3A, 0 2px 0 0 #B73C3A, 0 5px 3px #999999;
+    box-shadow: inset 0 0 0 #0482ce, 0 2px 0 0 #0482ce, 0 5px 3px #999999;
 }
 
 .progress-bar-success, .progress-bar-info {
@@ -426,8 +426,8 @@ button.btn-primary.dim:active {
 .btn-primary:active:hover,
 .btn-primary.active:hover,
 .btn-primary.active:focus {
-    background: #B73C3A;
-    border-color: #B73C3A;
+    background: #0482ce;
+    border-color: #0482ce;
   color: #FFFFFF;
 }
 
@@ -796,4 +796,10 @@ pre {
 }
 .navbar-brand{
     margin-left: 10px;
+    background: #ffffff !important;
+    color: #022d65 !important;
 }
+
+.top-navigation .navbar-brand {
+    /* background: #1ab394; */
+    /* color: #fff; */}
