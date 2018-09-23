@@ -6,6 +6,8 @@ open Fable.Helpers.React.Props
 
 open Shared
 open Friends
+
+open Chart
 let inner (userState: UserState) = 
     let user = userState.User
     div [ ]
@@ -16,9 +18,9 @@ let inner (userState: UserState) =
             [ ]
           
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Account Name" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.AccountName) ] ] ]
           
@@ -26,31 +28,31 @@ let inner (userState: UserState) =
        
           
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "First Name" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.FirstName) ] ] ]
           
                      
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Last Name" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.LastName) ] ] ]
           div [ Class "hr-line-dashed" ]
             [ ]   
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Email" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.Email) ] ] ]
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Phone Number" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.PhoneNumber) ] ] ]
 
@@ -58,17 +60,17 @@ let inner (userState: UserState) =
             [ ]   
 
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Country" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.Country) ] ] ]
         
  
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Post Code" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.PostCode) ] ] ]
 
@@ -76,22 +78,16 @@ let inner (userState: UserState) =
             [ ] 
           
           div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
+            [ label [ Class "col-lg-4 control-label" ]
                 [ str "Date of Birth" ]
-              div [ Class "col-lg-10" ]
+              div [ Class "col-lg-8" ]
                 [ p [ Class "form-control-static" ]
                     [ str ( string user.Identity.DOB) ] ] ]
         
          
         
         
-          div [ Class "hr-line-dashed" ]
-            [ ]   
-          div [ Class "form-group" ]
-            [ label [ Class "col-lg-2 control-label" ]
-                [ str "Social" ]
-              div [ Class "col-lg-10" ]
-                [ friendsBox (userState.Friends |> Seq.toList) ] ]
+        
           // div [ Class "form-group" ]
           //   [ label [ Class "col-lg-2 control-label" ]
           //       [ str "Static control" ]
@@ -102,14 +98,19 @@ let inner (userState: UserState) =
             ]]
 
 let settings (userState: UserState) = 
-  div [ Class "col-lg-12" ]
-    [ div [ Class "ibox float-e-margins" ]
-        [ div [ Class "ibox-title" ]
-            [ h5 [ ]
-                [ str "Settings"
-                   ]
-              div [ ]
-                [ 
-                  inner userState
-                  
-              ] ] ] ]
+  div[ Class "row" ]
+     [
+        div [ Class "col-lg-6" ]
+            [ div [ Class "ibox float-e-margins" ]
+                [ div [ Class "ibox-title" ]
+                    [ h5 [ ]
+                        [ str "Settings"
+                           ]
+                      inner userState ] ] ]
+        div[ Class "col-md-6" ]
+                      [
+                        referralInfo true
+                        friendsBox (userState.Friends |> Seq.toList)
+                      ]    
+     ]
+ 

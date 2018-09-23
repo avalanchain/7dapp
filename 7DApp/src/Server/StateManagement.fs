@@ -4,6 +4,7 @@ open FSharp.Data
 
 open Shared
 open Shared.Fake
+open System
 
 type PeopleData = CsvProvider<"People.csv">
 
@@ -29,27 +30,67 @@ let users =
             // Friends     = set []
             // Channels    = EncryptionKeys Map.empty 
         } ]
+let friends = users |> List.map Friend |> set 
 
+let friends1 = friends |> Set.toArray |> Array.filter(fun (Friend f) -> f.AccountName.Length % 2 = 0 )
+
+let friends2 = friends |> Set.toArray |> Array.filter(fun (Friend f) -> f.AccountName.Length % 2 <> 0 )
+let friends3 = friends |> Set.toArray |> Array.filter(fun (Friend f) -> f.AccountName.Length % 3 = 0 )
+
+let friends4 = friends |> Set.toArray |> Array.filter(fun (Friend f) -> f.AccountName.Length % 3 <> 0 )
+
+let channel1  = {
+    Id              = "12d4sdsd" |> ChannelId
+    Name            = "Secret EOS Channel"
+    Participants    = friends1 |> Array.toList
+    Messages        = [| |]
+    EncryptionKey   = "hsurwyru-1dw-dwdw-dw112132d2d4g4t4eg" |> EncryptionKey
+}
+
+let channel2  = {
+    Id              = "3434d4sdsd" |> ChannelId
+    Name            = "Popular DApss in EOS"
+    Participants    = friends2 |> Array.toList
+    Messages        = [| |]
+    EncryptionKey   = "hsurwyru-1dw-dwdw-dw112132d2d4g4tjh0" |> EncryptionKey
+}
+
+let channel3  = {
+    Id              = "676765d4sdsd" |> ChannelId
+    Name            = "Happy Birthday!!!"
+    Participants    = friends3 |> Array.toList
+    Messages        = [| |]
+    EncryptionKey   = "hsurwyru-1dw-dwdw-dw112132d2d4g4tvf0" |> EncryptionKey
+}
+let channel4  = {
+    Id              = "676765d4sdsd" |> ChannelId
+    Name            = "Very Important Things"
+    Participants    = friends4 |> Array.toList
+    Messages        = [| |]
+    EncryptionKey   = "hsurwyru-1dw-dwdw-dw11efwef344324t330" |> EncryptionKey
+}
+
+let channels = [|channel1.Id, channel1; channel2.Id, channel2;channel3.Id, channel3;channel4.Id, channel4;|] |> Map.ofArray
 let dataFeed: FeedItem[] =
     [|
-        {   Avatar      = "../img/avatar.jpg"
+        {   Avatar      = "../img/a8.jpg"
             Name        = "Monica Smith"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
+            Time        = "Today 5:60 pm - 12.06.2018"
+            ShortTime   = "1m ago"
             Action      = "posted a new blog." }
-        {   Avatar      = "../img/avatar.jpg"
+        {   Avatar      = "../img/a1.jpg"
             Name        = "Mark Johnson"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
+            Time        = "Today 5:60 pm - 12.06.2018"
+            ShortTime   = "1m ago"
             Action      = "posted a new blog." }
-        {   Avatar      = "../img/avatar.jpg"
+        {   Avatar      = "../img/a3.jpg"
             Name        = "Janet Rosowski"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
+            Time        = "Today 5:60 pm - 12.06.2018"
+            ShortTime   = "1m ago"
             Action      = "posted a new blog." }
-        {   Avatar      = "../img/avatar.jpg"
+        {   Avatar      = "../img/a6.jpg"
             Name        = "Kim Smith"
-            Time        = "Today 5:60 pm - 12.06.2014"
-            ShortTime   = "5m ago"
+            Time        = "Today 5:60 pm - 12.06.2018"
+            ShortTime   = "2m ago"
             Action      = "posted a new blog." }
     |]

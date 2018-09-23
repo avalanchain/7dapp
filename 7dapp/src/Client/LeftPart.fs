@@ -92,13 +92,44 @@ let leftpart (user: User) =
                                                                     ]
                                                            tr [ ]
                                                                 [ td [ ]
-                                                                    [   strong [ Class "m-r-xxs" ]
-                                                                               [ str "142" ]
-                                                                        str "DApps" ]
+                                                                    [   div [ Class "row" ]
+                                                                              [
+                                                                                div [ Class "col-md-6"]
+                                                                                    [
+                                                                                        str "DApps:" 
+                                                                                        
+                                                                                         
+                                                                                    ]
+                                                                                div [ Class "col-md-6"]
+                                                                                        [
+                                                                                          b [ ]
+                                                                                            [ str "142" ]
+                                                                                     
+                                                                                    ] 
+                                                                                ]
+                                                                        
+                                                                            
+                                                                         ]
                                                                   td [ ]
-                                                                    [   strong [ Class "m-r-xxs" ]
-                                                                                [ str "122" ]
-                                                                        str "Friends" ] ]
+                                                                    [   
+                                                                        div [ Class "row" ]
+                                                                              [
+                                                                                div [ Class "col-md-6"]
+                                                                                    [
+                                                                                        str "DApps:" 
+                                                                                        
+                                                                                         
+                                                                                    ]
+                                                                                div [ Class "col-md-6"]
+                                                                                        [
+                                                                                          b [ ]
+                                                                                            [ str "122" ]
+                                                                                     
+                                                                                    ] 
+                                                                                ]
+                                                                                                                                               
+                                                                        
+                                                                        ] ]
                                                                ] ]
 
                                             

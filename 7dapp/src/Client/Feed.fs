@@ -140,6 +140,7 @@ let feeds (feedItems: FeedItem list) =
     feedItems |> List.map (fun f -> f |> item )
 
 let feed (feedItems: FeedItem list)  =
+    let datetime = System.DateTime.Now.ToLongTimeString()
     div [ ]
         [ 
             div [ Class "ibox float-e-margins" ]
@@ -149,7 +150,7 @@ let feed (feedItems: FeedItem list)  =
                           [ str "Feed" ]
                         div [ Class "ibox-tools" ]
                           [ span [ Class "label label-success pull-right" ]
-                              [ str (sprintf "%d new messages" (feedItems |> List.length)) ] ] ]
+                              [ str datetime ] ] ]
                   div [ Class "ibox-content" ]
                       [ div [ ]
                           [ div [ Class "feed-activity-list" ]

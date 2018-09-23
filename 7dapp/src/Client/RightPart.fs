@@ -78,6 +78,6 @@ let rightpart  =
                           trendDapps
                            ] ]
 
-            referralInfo
+            referralInfo false
 
                      ]

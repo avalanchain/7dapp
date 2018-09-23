@@ -15,7 +15,7 @@ type ICounterApi =
 type UserId     = UserId    of string
 type ChannelId  = ChannelId of string
 
-type EncryptionKey  = EncryptionKey //of string
+type EncryptionKey  = EncryptionKey of string
 
 
 type UserIdentity = {

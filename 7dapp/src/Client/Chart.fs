@@ -47,7 +47,8 @@ let chartProps chartData (isLegend:bool) height =
                 o.legend <- if isLegend then (cLegOpt |> Some) else None
                 ); 
 
-let referralInfo =
+let referralInfo (isLegend:bool) =
+    // let type = isLegend ? " " : ""
     let chartTrValues = [| 41.;124.;76.;14.;9.|] 
     let datab =
         [|
@@ -79,7 +80,9 @@ let referralInfo =
         o.backgroundColor <- chartBGColors |> Array.map U4.Case1 |> U2.Case2 |> Some
         // o.hoverBackgroundColor <- chartHoverColors |> U2.Case2 |> Some
         )
-
+    let cLegOpt =  jsOptions<ChartJs.Chart.ChartLegendOptions>(fun clo -> 
+                            clo.position <- ChartJs.Chart.PositionType.Bottom |> Some
+                            )
     let chartJsData: ChartJs.Chart.ChartData = {
         labels = chartLabels |> Array.map U2.Case1  
         datasets = [| datasets |] 
@@ -93,7 +96,7 @@ let referralInfo =
 
         jsOptions<ChartComponentProps>(fun o -> 
                 o.data   <- chartJsData |> ChartData.ofT
-                o.legend <-  None ); 
+                o.legend <-  if isLegend then (cLegOpt |> Some) else None ); 
     div [ Class "ibox float-e-margins" ]
                 [ 
                   div [ Class "ibox-title" ]
