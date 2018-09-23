@@ -98,7 +98,7 @@ let leftpart (user: User) =
                                                                             [ str "32" ]
                                                                     str "Messages" ] ] ] ]
 
-                                            friendsBox (user.Friends |> Seq.toList)
+                                            
                                         ]    
                                 ]
 

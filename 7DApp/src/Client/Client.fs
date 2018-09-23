@@ -94,7 +94,7 @@ let view (model : Model) (dispatch : ClientMsg -> unit) =
                                                                 | SettingsTab ->
                                                                     div [ Class "row"]
                                                                         [
-                                                                            settings
+                                                                settings userState.User
                                                                         ]
 
                                                     ]
