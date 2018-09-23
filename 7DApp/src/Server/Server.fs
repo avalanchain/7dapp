@@ -76,7 +76,7 @@ let update clientDispatch msg state =
     | RS msg -> 
         match msg with 
         | UserConnected userId -> 
-            Fake.userState |> SetState |> clientDispatch 
+            { Fake.userState with Users = StateManagement.users } |> SetState |> clientDispatch 
         Connected Fake.user, Cmd.none
         // match state, msg with
         // | _, UserConnected u ->

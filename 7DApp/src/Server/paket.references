@@ -5,3 +5,4 @@ group Server
     Microsoft.AspNetCore
     Microsoft.AspNetCore.StaticFiles
     Fable.Remoting.Giraffe
+    FSharp.Data

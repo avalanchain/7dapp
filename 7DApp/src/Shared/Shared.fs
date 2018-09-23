@@ -70,6 +70,7 @@ type UserState = {
     Channels        : Channel list
     SuggestedFriends: Friend list
     SuggestedDapp   : Dapp list
+    Users           : User list
 }
 
 // type Msgs =
@@ -89,6 +90,7 @@ type RemoteServerMsg =
     // | SetUser       of User 
     // | SendMsg       of string 
     | UserConnected of Id: UserId
+    // | GetUsers
 
 
 module Remote =
@@ -123,4 +125,5 @@ module Fake =
         Channels        = []
         SuggestedFriends= []
         SuggestedDapp   = []
+        Users           = []
     }

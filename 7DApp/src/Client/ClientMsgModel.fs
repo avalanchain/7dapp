@@ -27,19 +27,16 @@ type ClientMsg =
 
 type Connection =
     | Disconnected
-    | Waiting
     | Connected of UserState
 
 
 type Model = {
     Connection      : Connection
-    // UserState       : UserState option
 }
 
 let init () =
     {
         Connection  = Disconnected
-        // UserState   = None
     }, Cmd.none
 let update (msg : ClientMsg) (model : Model)  =
     match msg with
@@ -48,16 +45,8 @@ let update (msg : ClientMsg) (model : Model)  =
     | RC msg ->
         match msg with
         | QueryConnected ->
-            printfn "QueryConnected!!!!"
             Bridge.Send(UserConnected (UserId "u"))
-            // match model.Connection with
-            // | Connected u //-> Bridge.Send(SetUser u)
-            // | Waiting 
-            // | Disconnected -> ()
-            // Bridge.Send UserConnected
-            // { model with ConnectedUsers = [] }, Cmd.none
             model, Cmd.none
         | SetState userState ->
-            printfn "SetState!!!!" 
             { model with Connection = Connected userState }, Cmd.none
 
